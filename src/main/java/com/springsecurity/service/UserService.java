@@ -1,5 +1,6 @@
 package com.springsecurity.service;
 
+import com.springsecurity.dto.SignUpRequest;
 import com.springsecurity.model.UserEntity;
 
 import java.util.List;
@@ -15,6 +16,8 @@ public interface UserService {
     void updateUser(UserEntity userEntity);
 
     void deleteUser(UserEntity userEntity);
+
+    void registerUser(SignUpRequest signUpRequest);
 
 
 }

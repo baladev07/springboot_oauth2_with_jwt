@@ -27,8 +27,8 @@ public class StartUpDataLoader implements ApplicationListener<ContextRefreshedEv
         var user = populateDefaultRolesIfNotExists(RoleEntity.ROLE_USER);
 
 
-        createUserIfNotExist("bala","bala@gmail.com",user,"Test1");
-        createUserIfNotExist("murugan","balamurugan7@gmail.com",admin,"Test2");
+        createUserIfNotExist("user1","user1@gmail.com",user,"user1");
+        createUserIfNotExist("user2","user2@gmail.com",admin,"user2");
 
         isPopulated = true;
 

@@ -20,14 +20,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity userEntity = userRepository.findByName(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        UserEntity userEntity = userRepository.findByEmail(email);
         if(userEntity !=null)
         {
-            return new User(userEntity.getName(), userEntity.getPassword(),new ArrayList());
+            return new User(userEntity.getEmail(), userEntity.getPassword(),new ArrayList());
         }
         else {
-            throw new UsernameNotFoundException("User not found for this user name"+username);
+            throw new UsernameNotFoundException("User not found for this user name"+email);
         }
     }
 }

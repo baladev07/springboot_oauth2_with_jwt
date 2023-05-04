@@ -1,5 +1,7 @@
 package com.springsecurity.service.impl;
 
+import com.springsecurity.dto.SignUpRequest;
+import com.springsecurity.exception.UserAlreadyExistsException;
 import com.springsecurity.model.UserEntity;
 import com.springsecurity.repository.UserRepository;
 import com.springsecurity.service.UserService;
@@ -40,6 +42,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(UserEntity userEntity) {
         userRepository.delete(userEntity);
+    }
+
+
+    @org.springframework.transaction.annotation.Transactional(value="transactionManager")
+    public void registerUser(final SignUpRequest request) throws UserAlreadyExistsException
+    {
+        if(userRepository.existsByEmailIgnoreCase(request.getEmail()))
+        {
+            throw new UserAlreadyExistsException("email already exists");
+        }
+        UserEntity userEntity = new UserEntity(request.getUsername(),request.getPassword(),request.getEmail());
+        userRepository.save(userEntity);
+        userRepository.flush();
     }
 }
 

@@ -20,9 +20,6 @@ import static springfox.documentation.builders.PathSelectors.regex;
 @EnableSwagger2
 public class SwaggerConfig {
 
-
-    private static final String BASIC_AUTH = "basicAuth";
-
     private static final String BEARER_AUTH = "Bearer";
 
 
@@ -36,16 +33,16 @@ public class SwaggerConfig {
 
 
     private List<SecurityScheme> securitySchemes() {
-        return List.of(new BasicAuth(BASIC_AUTH), new ApiKey(BEARER_AUTH, "Authorization", "header"));
+        return List.of(new ApiKey(BEARER_AUTH, "Authorization", "header"));
     }
 
     private SecurityContext securityContext() {
-        return SecurityContext.builder().securityReferences(List.of(basicAuthReference(), bearerAuthReference())).forPaths(PathSelectors.ant("/api/**")).build();
+        return SecurityContext.builder().securityReferences(List.of(bearerAuthReference())).forPaths(PathSelectors.ant("/api/**")).build();
     }
 
-    private SecurityReference basicAuthReference() {
-        return new SecurityReference(BASIC_AUTH, new AuthorizationScope[0]);
-    }
+//    private SecurityReference basicAuthReference() {
+//        return new SecurityReference(BASIC_AUTH, new AuthorizationScope[0]);
+//    }
 
     private SecurityReference bearerAuthReference() {
         return new SecurityReference(BEARER_AUTH, new AuthorizationScope[0]);

@@ -12,4 +12,8 @@ public interface UserRepository extends JpaRepository<UserEntity,Integer> {
     UserEntity findByEmail(String email);
 
     UserEntity findByName(String name);
+
+    boolean existsByEmailIgnoreCase(String email);
+
+
 }

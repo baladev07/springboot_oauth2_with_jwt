@@ -3,6 +3,7 @@ package com.springsecurity.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,8 +23,11 @@ public class UserEntity extends BaseEntity{
     private int user_id;
 
 
-    @Column
+    @Column(unique = true)
     private String name;
+
+    @Column(unique = true)
+    private String email;
 
 
     @Column
@@ -37,17 +41,23 @@ public class UserEntity extends BaseEntity{
             joinColumns = @JoinColumn(name="user_id"),
             inverseJoinColumns = @JoinColumn(name="role_id"))
     @JsonManagedReference
+    @JsonProperty("roles")
     private RoleEntity roleEntity;
 
 
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JsonManagedReference
+    @JsonProperty("department_entity")
     private DepartmentEntity departmentEntity;
 
 
-    @Column
-    private String email;
+
+    public UserEntity()
+    {
+
+    }
+
 
     public void setPassword(String password)
     {
@@ -55,4 +65,15 @@ public class UserEntity extends BaseEntity{
         this.password = encoder.encode(password);
 
     }
+
+    public UserEntity(String username, String password, String email)
+    {
+
+        this.name = username;
+        this.email = email;
+        setPassword(password);
+
+    }
+
+
 }
